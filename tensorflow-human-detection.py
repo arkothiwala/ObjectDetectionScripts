@@ -6,6 +6,7 @@ import numpy as np
 import tensorflow as tf
 import cv2
 import time
+import argparse
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(
@@ -89,8 +90,8 @@ if __name__ == "__main__":
     model_path = './faster_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
     odapi = DetectorAPI(path_to_ckpt=model_path)
     threshold = 0.7
-    cap = cv2.VideoCapture(parser['video_path'])
-    name = os.path.splitext(parser['video_path'])[1].split('/')[-1]
+    cap = cv2.VideoCapture(args['video_path'])
+    name = os.path.splitext(args['video_path'])[1].split('/')[-1]
     if not os.path.exists('./results'):
         os.makedirs('./results')
 
