@@ -11,7 +11,7 @@ import argparse
 # Parse command line arguments
 parser = argparse.ArgumentParser(
     description='Test CharNet performance against Google Vision API results')
-parser.add_argument("video_path", required=True,
+parser.add_argument("video_path",
                     metavar="video_path",
                     help="path/to/process/video")
 
