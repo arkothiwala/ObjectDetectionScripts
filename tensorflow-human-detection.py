@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(
     description='Test CharNet performance against Google Vision API results')
 parser.add_argument("video_path",
                     metavar="video_path",
-                    help="path/to/process/video")
+                    help="path/to/process/video/")
 
 args = parser.parse_args()
 
@@ -90,8 +90,8 @@ if __name__ == "__main__":
     model_path = './faster_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
     odapi = DetectorAPI(path_to_ckpt=model_path)
     threshold = 0.7
-    cap = cv2.VideoCapture(args['video_path'])
-    name = os.path.splitext(args['video_path'])[1].split('/')[-1]
+    cap = cv2.VideoCapture(args.video_path)
+    name = os.path.splitext(args.video_path)[1].split('/')[-1]
     if not os.path.exists('./results'):
         os.makedirs('./results')
 
