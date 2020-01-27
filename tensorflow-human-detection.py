@@ -109,7 +109,7 @@ if __name__ == "__main__":
                 box = boxes[i]
                 cv2.rectangle(img,(box[1],box[0]),(box[3],box[2]),(255,0,0),2)
 
-        cv2.imsave('./results/{}_{}.jpg'.format(name,i), img)
+        cv2.imwrite('./results/{}_{}.jpg'.format(name,i), img)
     
     make_video(name)
 
