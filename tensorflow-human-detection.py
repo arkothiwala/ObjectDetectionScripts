@@ -99,22 +99,23 @@ if __name__ == "__main__":
     if not os.path.exists('./results'):
         os.makedirs('./results')
     count = 0
-    while True:
-        r, img = cap.read()
-        img = cv2.resize(img, (1280, 720))
+    try:
+        while True:
+            r, img = cap.read()
+            img = cv2.resize(img, (1280, 720))
 
-        boxes, scores, classes, num = odapi.processFrame(img)
+            boxes, scores, classes, num = odapi.processFrame(img)
 
-        # Visualization of the results of a detection.
+            # Visualization of the results of a detection.
 
-        for i in range(len(boxes)):
-            # Class 1 represents human
-            if classes[i] == 1 and scores[i] > threshold:
-                box = boxes[i]
-                cv2.rectangle(img,(box[1],box[0]),(box[3],box[2]),(255,0,0),2)
+            for i in range(len(boxes)):
+                # Class 1 represents human
+                if classes[i] == 1 and scores[i] > threshold:
+                    box = boxes[i]
+                    cv2.rectangle(img,(box[1],box[0]),(box[3],box[2]),(255,0,0),2)
 
-        cv2.imwrite('./results/{}_{}.jpg'.format(name,count), img)
-        count += 1
-    
-    make_video(name)
+            cv2.imwrite('./results/{}_{}.jpg'.format(name,count), img)
+            count += 1
+    except:   
+        make_video(name)
 
