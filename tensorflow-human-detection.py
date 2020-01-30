@@ -72,14 +72,18 @@ class DetectorAPI:
 def make_video(filename):
     import cv2    
     img_array = []
-    for index in range(290):# os.listdir('./results/'):
-        img = cv2.imread('./results/{}_{}.jpg'.format(filename, index))
-        height, width, layers = img.shape
-        size = (width,height)
-        img_array.append(img)
+    for index in range(len(os.listdir('./results/'))):
+        path = './results/{}_{}.jpg'.format(filename, index)
+        if(os.path.exists(path)):
+          img = cv2.imread('./results/{}_{}.jpg'.format(filename, index))
+          height, width, layers = img.shape
+          size = (width,height)
+          img_array.append(img)
+        else:
+          print("path: {} does not exist".format(path))        
     
     
-    out = cv2.VideoWriter('./{}.mp4'.format(filename),cv2.VideoWriter_fourcc(*'DIVX'), 20, size)
+    out = cv2.VideoWriter('./{}_result.mp4'.format(filename),cv2.VideoWriter_fourcc(*'DIVX'), 20, size)
     
     for i in range(len(img_array)):
         out.write(img_array[i])
@@ -91,10 +95,10 @@ if __name__ == "__main__":
     odapi = DetectorAPI(path_to_ckpt=model_path)
     threshold = 0.7
     cap = cv2.VideoCapture(args.video_path)
-    name = os.path.splitext(args.video_path)[1].split('/')[-1]
+    name = os.path.splitext(args.video_path)[0].split('/')[-1]
     if not os.path.exists('./results'):
         os.makedirs('./results')
-
+    count = 0
     while True:
         r, img = cap.read()
         img = cv2.resize(img, (1280, 720))
@@ -109,7 +113,8 @@ if __name__ == "__main__":
                 box = boxes[i]
                 cv2.rectangle(img,(box[1],box[0]),(box[3],box[2]),(255,0,0),2)
 
-        cv2.imwrite('./results/{}_{}.jpg'.format(name,i), img)
+        cv2.imwrite('./results/{}_{}.jpg'.format(name,count), img)
+        count += 1
     
     make_video(name)
 
