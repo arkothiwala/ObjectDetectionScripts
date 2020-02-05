@@ -15,6 +15,10 @@ parser.add_argument("video_path",
                     metavar="video_path",
                     help="path/to/process/video/")
 
+parser.add_argument("-threshold", required = True,
+                    metavar="object detection confidence threshold",
+                    help="object detection confidence threshold")
+
 args = parser.parse_args()
 
 
@@ -93,7 +97,7 @@ if __name__ == "__main__":
     import os
     model_path = './faster_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
     odapi = DetectorAPI(path_to_ckpt=model_path)
-    threshold = 0.7
+    threshold = float(args.threshold)
     cap = cv2.VideoCapture(args.video_path)
     name = os.path.splitext(args.video_path)[0].split('/')[-1]
     if not os.path.exists('./results'):
